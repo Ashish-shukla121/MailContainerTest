@@ -22,6 +22,10 @@ namespace MailContainerTest.Services
                 // Fail Fast Approach. Checking here mail container status. If it is not in operation state than throwing exception.
                 if (mailContainer.Status != "Operational")
                 {
+                    throw new Exception("Mail container is not in opretational state!");
+                }
+                else
+                {
                     if (dataStoreType == "Backup")
                     {
                         var mailContainerDataStore = new BackupMailContainerDataStore();
@@ -100,10 +104,7 @@ namespace MailContainerTest.Services
                         }
                     }
                 }
-                else
-                {
-                    throw new Exception("Mail container is not in opretational state!");
-                }
+               
             }
             // Try catch block to handle exceptions 
             catch (Exception ex)

@@ -16,6 +16,7 @@ The code for this exercise has been developed to manage the transfer of mail ite
 #### Assumptions
 
 - For the sake of simplicity, we can assume the containers have an unlimited capacity.
+- I have assumed that we are having a mail container service that is continuously checking the state of containers. 
 
 ### The exercise brief
 
