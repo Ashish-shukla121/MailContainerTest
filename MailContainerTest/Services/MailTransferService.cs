@@ -22,32 +22,27 @@ namespace MailContainerTest.Services
             var mailContainer = _mailContainerDataStore.GetMailContainer(makeMailTransferRequest.SourceMailContainerNumber);
             var makeMailTransferResult = new MakeMailTransferResult();
             var dataStoreType = ConfigurationManager.AppSettings["DataStoreType"];
-            var mailContainerDataStore = new BackupMailContainerDataStore();
-            var result = new MakeMailTransferResult(); 
-
-            // Checking here whether Mail container is in operation state or not
-            MailContainer mailContainerStatus = new MailContainer();
+            
             try
             {
+                // Checking here whether Mail container is in operation state or not
                 // Fail Fast Approach. Checking here mail container status. If it is not in operation state than throwing exception.
-                if (mailContainerStatus.Status != 0)
+                if (mailContainer.Status != 0)
                 {
                     throw new Exception("Mail container is not in operational state!");
                 }
                 else
                 {
-                    _mailContainerDataStore.GetMailContainer(makeMailTransferRequest.SourceMailContainerNumber);
-                    var checkMailTypeResult = CheckMailType(makeMailTransferRequest, mailContainerStatus, makeMailTransferResult);
+                    var checkMailTypeResult = CheckMailType(makeMailTransferRequest, mailContainer, makeMailTransferResult);
                     if (!checkMailTypeResult.Equals(true))
                     {
-                        
-                        mailContainer.Capacity -= makeMailTransferRequest.NumberOfMailItems;
-                        return result;
+                       return makeMailTransferResult;
                     }
                     else
                     {
+                         mailContainer.Capacity -= makeMailTransferRequest.NumberOfMailItems;
                         _mailContainerDataStore.UpdateMailContainer(mailContainer);
-                        return result;
+                        return makeMailTransferResult;
                     }
                    
                 }
