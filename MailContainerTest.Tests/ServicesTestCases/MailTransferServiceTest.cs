@@ -1,58 +1,60 @@
-﻿using XUnit;
+﻿using System.Net;
+using MailContainerTest.Data;
+using MailContainerTest.Services;
+using MailContainerTest.Types;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MailContainerTest.Tests.ServicesTestCases
 {
-    public class MailTransferServiceTest : IMailTransferService
+    public class MailTransferServiceTest : MailTransferService
     {
-        private readonly IMailContainer _mailContainerStatus;
-        public MailTransferServiceTest(IMailContainer mailContainer)
+        
+        private readonly IMailContainerDataStore _mailContainerDataStore;
+
+        public MailTransferServiceTest(IMailContainerDataStore mailContainerDataStore) : base(mailContainerDataStore)
         {
-            _mailContainerStatus = mailContainer;
         }
+        
         [Theory]
         // To moq the type we can use mocking tools like fixture
         [InlineData(typeof(MakeMailTransferRequest))]
-        public void MakeMailTransfer_ReturnsExceptionAsContainerIsNonOperational(MakeMailTransferRequest request)
+        public void MakeMailTransfer_ReturnsExceptionAsContainerIsNonOperational(MakeMailTransferRequest makeMailTransferRequest)
         {
             // Arrange
-            object req = request;
-            var mailServiceObj = new MailTransferServiceTest();
-            MailContainer mailContainer = "Non-Operational";
+           
             //Act
-            var result = mailServiceObj.MakeMailTransfer(req);
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Contains("is not in opretational state");
+            Assert.AreNotEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
 
         [Theory]
         [InlineData(typeof(MakeMailTransferRequest))]
         [InlineData("This is string")]
-        public void MakeMailTransfer_ReturnsFalseAsNoProperInputProvided(MakeMailTransferRequest request)
+        public void MakeMailTransfer_ReturnsFalseAsNoProperInputProvided(MakeMailTransferRequest makeMailTransferRequest)
         {
-            // Arrange
-            object req = request;
-            var mailServiceObj = new MailTransferServiceTest();
-            MailContainer mailContainer = "Operational";
+            // Arrange 
+            
             //Act
-            var result = mailServiceObj.MakeMailTransfer(req);
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
         }
 
 
         [Theory]
         [InlineData(typeof(MakeMailTransferRequest))]
         [InlineData("This is string")]
-        public void MakeMailTransfer_ReturnsSuccess(MakeMailTransferRequest request)
+        public void MakeMailTransfer_ReturnsSuccess(MakeMailTransferRequest makeMailTransferRequest)
         {
             // Arrange
-            object req = request;
-            var mailServiceObj = new MailTransferServiceTest();
-            MailContainer mailContainer = "Operational";
+           
             //Act
-            var result = mailServiceObj.MakeMailTransfer(req);
+           // var result = mailServiceObj.MakeMailTransfer(request);
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
         }
     }
 }

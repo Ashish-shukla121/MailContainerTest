@@ -1,9 +1,13 @@
-﻿using Xunit;
+﻿using System.Net;
+using MailContainerTest.Data;
+using MailContainerTest.Types;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MailContainerTest.Tests.DataTestCases
 {
-   
-    public class MailContainerDataStoreTest:IMailContainerDataStore
+
+    public class MailContainerDataStoreTest:MailContainerDataStore
     {
         #region "GetMailContainer"
         [Theory]
@@ -12,8 +16,12 @@ namespace MailContainerTest.Tests.DataTestCases
         {
             //Arrange
             //act
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Contains("No Such Container Found");
+            // WE can through and match the Exception as well, Code snippet is in below line 
+            //Assert.ThrowsExceptionAsync<>().Result.ToString();
+
+            Assert.AreNotEqual(HttpStatusCode.Accepted, result.StatusCode);
         }
         [Theory]
         [InlineData("ABC")]
@@ -21,8 +29,9 @@ namespace MailContainerTest.Tests.DataTestCases
         {
             //Arrange
             //act
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
         }
         [Theory]
         [InlineData("ABC")]
@@ -30,8 +39,9 @@ namespace MailContainerTest.Tests.DataTestCases
         {
             //Arrange
             //act
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
         }
         #endregion
 
@@ -42,8 +52,12 @@ namespace MailContainerTest.Tests.DataTestCases
         {
             //Arrange
             //act
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Contains("No Such Container Found");
+            // WE can through and match the Exception as well, Code snippet is in below line 
+            //Assert.ThrowsExceptionAsync<>().Result.ToString();
+
+            Assert.AreNotEqual(HttpStatusCode.Accepted, result.StatusCode);
         }
         [Theory]
         [InlineData(typeof(MailContainer))]
@@ -51,8 +65,9 @@ namespace MailContainerTest.Tests.DataTestCases
         {
             //Arrange
             //act
+            var result= new HttpResponseMessage(); 
             //Assert
-            Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
         }
         [Theory]
         [InlineData(typeof(MailContainer))]
@@ -60,8 +75,9 @@ namespace MailContainerTest.Tests.DataTestCases
         {
             //Arrange
             //act
+            var result = new HttpResponseMessage();
             //Assert
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
         }
         #endregion
     }
