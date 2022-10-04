@@ -16,7 +16,7 @@ The code for this exercise has been developed to manage the transfer of mail ite
 #### Assumptions
 
 - For the sake of simplicity, we can assume the containers have an unlimited capacity.
-- I have assumed that we are having a mail container service that is continuously checking the state of containers. 
+ 
 
 ### The exercise brief
 
@@ -33,3 +33,11 @@ You should add suitable tests into the MailContainerTest.Test project.
 
 There are no additional constraints, use the packages and approach you feel appropriate, aim to spend no more than 2 hours. Please update the readme with specific comments on any areas that are unfinished and what you would cover given more time.
 
+-To Access Data, I have used dependency injection in Service class.
+
+-Using abstract class In Data to avoid duplicate code, GetContainer and Update Container methods are used in BackupMailContainerDataStore
+and in MailContainerDataStore, Having same code. This also implements open/close Solid principle
+
+- We could also have Liskov instead abstract class that too implement open/Close.
+
+- For testcase, I have used Xunit.
