@@ -41,3 +41,4 @@ and in MailContainerDataStore, Having same code. This also implements open/close
 - We could also have Liskov instead abstract class that too implement open/Close.
 
 - For testcase, I have used Xunit.
+- In data Folder we are also using Repository Design pattern and intorduced new Interface.
